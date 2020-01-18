@@ -1,0 +1,75 @@
+object FormWebSocketTmr: TFormWebSocketTmr
+  Left = 274
+  Height = 179
+  Top = 147
+  Width = 348
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'WebSocket Timer'
+  ClientHeight = 179
+  ClientWidth = 348
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  LCLVersion = '2.1.0.0'
+  object Panel1: TPanel
+    Left = 0
+    Height = 88
+    Top = 0
+    Width = 348
+    Align = alTop
+    ClientHeight = 88
+    ClientWidth = 348
+    TabOrder = 0
+    object ButtonS: TButton
+      Left = 80
+      Height = 25
+      Top = 48
+      Width = 75
+      Anchors = [akLeft, akBottom]
+      Caption = 'Start'
+      OnClick = ButtonSClick
+      TabOrder = 0
+    end
+    object ButtonR: TButton
+      Left = 176
+      Height = 25
+      Top = 48
+      Width = 75
+      Anchors = [akRight, akBottom]
+      Caption = 'Reset'
+      OnClick = ButtonRClick
+      TabOrder = 1
+    end
+  end
+  object StaticTextTmr: TStaticText
+    Left = 0
+    Height = 91
+    Top = 88
+    Width = 348
+    Align = alClient
+    Alignment = taCenter
+    Caption = '00:00:00'
+    Color = clDefault
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -48
+    Font.Name = 'Segoe UI Symbol'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentFont = False
+    ParentColor = False
+    TabOrder = 1
+  end
+  object UniqueInstance1: TUniqueInstance
+    Enabled = True
+    Left = 24
+    Top = 72
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = Timer1Timer
+    Left = 296
+    Top = 72
+  end
+end

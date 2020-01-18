@@ -1,0 +1,29 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tformwebsockettmr.buttonr.caption
+msgid "Reset"
+msgstr ""
+
+#: tformwebsockettmr.buttons.caption
+msgctxt "tformwebsockettmr.buttons.caption"
+msgid "Start"
+msgstr ""
+
+#: tformwebsockettmr.caption
+msgid "WebSocket Timer"
+msgstr ""
+
+#: tformwebsockettmr.statictexttmr.caption
+msgid "00:00:00"
+msgstr ""
+
+#: webscktmr_main.rsstart
+msgctxt "webscktmr_main.rsstart"
+msgid "Start"
+msgstr ""
+
+#: webscktmr_main.rsstop
+msgid "Stop"
+msgstr ""
+
