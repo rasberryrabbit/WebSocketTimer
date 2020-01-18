@@ -18,6 +18,14 @@ msgstr ""
 msgid "00:00:00"
 msgstr ""
 
+#: webscktmr_main.rsclosetimer
+msgid "Close Timer?"
+msgstr "타이머를 닫으시겠습니까?"
+
+#: webscktmr_main.rsno
+msgid "No"
+msgstr "아니오"
+
 #: webscktmr_main.rsresettimer
 msgid "Reset Timer?"
 msgstr "타이머를 재설정 하시겠습니까?"
@@ -30,4 +38,8 @@ msgstr "스타트"
 #: webscktmr_main.rsstop
 msgid "Stop"
 msgstr "중지"
+
+#: webscktmr_main.rsyes
+msgid "Yes"
+msgstr "예"
 

@@ -21,6 +21,7 @@ type
     UniqueInstance1: TUniqueInstance;
     procedure ButtonSClick(Sender: TObject);
     procedure ButtonRClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -44,6 +45,9 @@ resourcestring
   rsStop = 'Stop';
   rsStart = 'Start';
   rsResetTimer = 'Reset Timer?';
+  rsCloseTimer = 'Close Timer?';
+  rsYes = 'Yes';
+  rsNo = 'No';
 
 
 var
@@ -100,7 +104,7 @@ end;
 
 procedure TFormWebSocketTmr.ButtonRClick(Sender: TObject);
 begin
-  if QuestionDlg(Caption, rsResetTimer, mtConfirmation, [mrYes, mrNo], '')=mrYes
+  if QuestionDlg(Caption, rsResetTimer, mtConfirmation, [mrYes,rsYes, mrNo, rsNo,'IsDefault'], '')=mrYes
     then begin
     stime:=Now;
     if ButtonS.Tag=0 then
@@ -108,6 +112,14 @@ begin
     lastTick:=0;
     Timer1Timer(nil);
   end;
+end;
+
+procedure TFormWebSocketTmr.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+  if (ButtonS.Tag<>0) and (QuestionDlg(Caption, rsCloseTimer, mtConfirmation, [
+    mrYes, rsYes, mrNo, rsNo, 'IsDefault'], '')=mrNo) then
+    CanClose:=False;
 end;
 
 procedure TFormWebSocketTmr.FormDestroy(Sender: TObject);

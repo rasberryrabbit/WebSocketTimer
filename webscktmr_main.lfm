@@ -8,6 +8,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
   Caption = 'WebSocket Timer'
   ClientHeight = 179
   ClientWidth = 348
+  OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '2.1.0.0'
