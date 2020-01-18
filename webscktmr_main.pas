@@ -43,6 +43,7 @@ uses
 resourcestring
   rsStop = 'Stop';
   rsStart = 'Start';
+  rsResetTimer = 'Reset Timer?';
 
 
 var
@@ -73,7 +74,7 @@ begin
   DecodeDateTime(Curtime,ye,mo,dd,hh,mm,ss,sm);
   dd:=DaysBetween(Now,stime);
   hh:=hh+dd*24;
-  s:=Format('%.2d:%.2d:%.2d',[hh,mm,ss]);
+  s:=Format('%d:%.2d:%.2d',[hh,mm,ss]);
   StaticTextTmr.Caption:=s;
   clockwebsck.BroadcastMsg(s);
 end;
@@ -99,11 +100,14 @@ end;
 
 procedure TFormWebSocketTmr.ButtonRClick(Sender: TObject);
 begin
-  stime:=Now;
-  if ButtonS.Tag=0 then
-    DoReset:=True;
-  lastTick:=0;
-  Timer1Timer(nil);
+  if QuestionDlg(Caption, rsResetTimer, mtConfirmation, [mrYes, mrNo], '')=mrYes
+    then begin
+    stime:=Now;
+    if ButtonS.Tag=0 then
+      DoReset:=True;
+    lastTick:=0;
+    Timer1Timer(nil);
+  end;
 end;
 
 procedure TFormWebSocketTmr.FormDestroy(Sender: TObject);

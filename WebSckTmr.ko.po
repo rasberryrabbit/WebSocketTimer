@@ -18,6 +18,10 @@ msgstr ""
 msgid "00:00:00"
 msgstr ""
 
+#: webscktmr_main.rsresettimer
+msgid "Reset Timer?"
+msgstr "타이머를 재설정 하시겠습니까?"
+
 #: webscktmr_main.rsstart
 msgctxt "webscktmr_main.rsstart"
 msgid "Start"
