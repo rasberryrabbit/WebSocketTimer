@@ -28,7 +28,8 @@ type
   private
 
   public
-
+    procedure LoadAppConfig;
+    procedure SaveAppConfig;
   end;
 
 var
@@ -39,7 +40,7 @@ var
 implementation
 
 uses
-  DefaultTranslator, DateUtils, uwebsockClock;
+  DefaultTranslator, DateUtils, uwebsockClock, IniFiles;
 
 resourcestring
   rsStop = 'Stop';
@@ -52,20 +53,32 @@ resourcestring
 
 var
   stime: TDateTime;
-  DoReset: Boolean = True;
+  DoReset: Boolean = False;
   lastTick, curtick: Int64;
   ye, mo, dd, hh, mm, ss, sm: Word;
   clockwebsck: TWebsocketClockServer;
+  appconfig: string;
+  WSPort: string = '57900';
 
 {$R *.lfm}
+
+function InitAppConfig:UnicodeString;
+begin
+  CreateDir(GetAppConfigDir(False));
+  Result:=GetAppConfigFile(False);
+end;
+
 
 { TFormWebSocketTmr }
 
 procedure TFormWebSocketTmr.FormShow(Sender: TObject);
 begin
-  stime:=Now;
   lastTick:=0;
-  clockwebsck:=TWebsocketClockServer.Create('57900');
+  appconfig:=InitAppConfig;
+  LoadAppConfig;
+  clockwebsck:=TWebsocketClockServer.Create(WSPort);
+  stime:=Now;
+  Timer1Timer(nil);
 end;
 
 procedure TFormWebSocketTmr.Timer1Timer(Sender: TObject);
@@ -81,6 +94,39 @@ begin
   s:=Format('%d:%.2d:%.2d',[hh,mm,ss]);
   StaticTextTmr.Caption:=s;
   clockwebsck.BroadcastMsg(s);
+end;
+
+procedure TFormWebSocketTmr.LoadAppConfig;
+var
+  inifile:TIniFile;
+begin
+  try
+    inifile:=TIniFile.Create(appconfig);
+    try
+      lastTick:=inifile.ReadInt64('TIME','LASTTICK',0);
+      WSPort:=inifile.ReadString('NET','PORT','57900');
+    finally
+      inifile.Free;
+    end;
+  except
+  end;
+end;
+
+procedure TFormWebSocketTmr.SaveAppConfig;
+var
+  inifile:TIniFile;
+begin
+  try
+    lastTick:=lastTick+curtick;
+    inifile:=TIniFile.Create(appconfig);
+    try
+      inifile.WriteInt64('TIME','LASTTICK',lastTick);
+      inifile.WriteString('NET','PORT',WSPort);
+    finally
+      inifile.Free;
+    end;
+  except
+  end;
 end;
 
 procedure TFormWebSocketTmr.ButtonSClick(Sender: TObject);
@@ -125,6 +171,7 @@ end;
 procedure TFormWebSocketTmr.FormDestroy(Sender: TObject);
 begin
   clockwebsck.Free;
+  SaveAppConfig;
 end;
 
 end.
