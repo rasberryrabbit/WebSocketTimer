@@ -95,7 +95,7 @@ begin
   curtick:=MilliSecondsBetween(Now,stime);
   CurTime:=(lastTick+curtick)/3600/24/1000;
   DecodeDateTime(Curtime,ye,mo,dd,hh,mm,ss,sm);
-  dd:=DaysBetween(Now,stime);
+  dd:=Trunc(CurTime);
   hh:=hh+dd*24;
   if CheckBoxMilli.Checked then
     s:=Format('%d:%.2d:%.2d.%.3d',[hh,mm,ss,sm])
