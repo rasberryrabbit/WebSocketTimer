@@ -15,6 +15,7 @@ type
   TFormWebSocketTmr = class(TForm)
     ButtonS: TButton;
     ButtonR: TButton;
+    CheckBoxMilli: TCheckBox;
     Panel1: TPanel;
     StaticTextTmr: TStaticText;
     Timer1: TTimer;
@@ -76,7 +77,12 @@ begin
   lastTick:=0;
   appconfig:=InitAppConfig;
   LoadAppConfig;
-  clockwebsck:=TWebsocketClockServer.Create(WSPort);
+  try
+    clockwebsck:=TWebsocketClockServer.Create(WSPort);
+  except
+    on e:exception do
+      ShowMessage(e.Message);
+  end;
   stime:=Now;
   Timer1Timer(nil);
 end;
@@ -91,7 +97,10 @@ begin
   DecodeDateTime(Curtime,ye,mo,dd,hh,mm,ss,sm);
   dd:=DaysBetween(Now,stime);
   hh:=hh+dd*24;
-  s:=Format('%d:%.2d:%.2d',[hh,mm,ss]);
+  if CheckBoxMilli.Checked then
+    s:=Format('%d:%.2d:%.2d.%.3d',[hh,mm,ss,sm])
+    else
+      s:=Format('%d:%.2d:%.2d',[hh,mm,ss]);
   StaticTextTmr.Caption:=s;
   clockwebsck.BroadcastMsg(s);
 end;
@@ -105,6 +114,7 @@ begin
     try
       lastTick:=inifile.ReadInt64('TIME','LASTTICK',0);
       WSPort:=inifile.ReadString('NET','PORT','57900');
+      CheckBoxMilli.Checked:=inifile.ReadBool('TIME','SHOWMILLI',False);
     finally
       inifile.Free;
     end;
@@ -122,6 +132,7 @@ begin
     try
       inifile.WriteInt64('TIME','LASTTICK',lastTick);
       inifile.WriteString('NET','PORT',WSPort);
+      inifile.WriteBool('TIME','SHOWMILLI',CheckBoxMilli.Checked);
     finally
       inifile.Free;
     end;
