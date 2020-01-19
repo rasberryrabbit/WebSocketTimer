@@ -1,3 +1,10 @@
+@font-face {
+font-family: 'Digital Numbers Regular';
+font-style: normal;
+font-weight: normal;
+src: local('Digital Numbers Regular'), url('DigitalNumbers-Regular.woff') format('woff');
+}
+
 #box {
   display: flex;
   flex-direction: column;
@@ -13,4 +20,5 @@
   font-size: xx-large;
   color: white;
   text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
+  font-family:'Digital Numbers Regular';
 }
