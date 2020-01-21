@@ -1,13 +1,13 @@
 object FormWebSocketTmr: TFormWebSocketTmr
   Left = 274
-  Height = 179
+  Height = 194
   Top = 147
-  Width = 348
+  Width = 372
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'WebSocket Timer'
-  ClientHeight = 179
-  ClientWidth = 348
+  ClientHeight = 194
+  ClientWidth = 372
   Color = clBackground
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
@@ -17,10 +17,10 @@ object FormWebSocketTmr: TFormWebSocketTmr
     Left = 0
     Height = 88
     Top = 0
-    Width = 348
+    Width = 372
     Align = alTop
     ClientHeight = 88
-    ClientWidth = 348
+    ClientWidth = 372
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
@@ -53,7 +53,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
       TabOrder = 2
     end
     object ButtonFnt: TButton
-      Left = 224
+      Left = 248
       Height = 25
       Top = 8
       Width = 75
@@ -63,7 +63,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
       TabOrder = 3
     end
     object ColorButtonB: TColorButton
-      Left = 304
+      Left = 328
       Height = 25
       Top = 8
       Width = 32
@@ -77,9 +77,9 @@ object FormWebSocketTmr: TFormWebSocketTmr
   object StaticTextTmr: TStaticText
     Left = 0
     Height = 91
-    Top = 88
-    Width = 348
-    Align = alClient
+    Top = 103
+    Width = 372
+    Align = alBottom
     Alignment = taCenter
     Caption = '00:00:00'
     Color = clNone
