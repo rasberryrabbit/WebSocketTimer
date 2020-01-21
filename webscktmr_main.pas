@@ -80,6 +80,7 @@ end;
 procedure TFormWebSocketTmr.FormShow(Sender: TObject);
 begin
   lastTick:=0;
+  curtick:=0;
   appconfig:=InitAppConfig;
   LoadAppConfig;
   try
@@ -89,7 +90,8 @@ begin
       ShowMessage(e.Message);
   end;
   stime:=Now;
-  Timer1Timer(nil);
+  Timer1.Enabled:=True;
+  //Timer1Timer(nil);
 end;
 
 procedure TFormWebSocketTmr.Timer1Timer(Sender: TObject);
@@ -97,7 +99,8 @@ var
   CurTime: TDateTime;
   s: string;
 begin
-  curtick:=MilliSecondsBetween(Now,stime);
+  if ButtonS.Tag<>0 then
+    curtick:=MilliSecondsBetween(Now,stime);
   CurTime:=(lastTick+curtick)/3600/24/1000;
   DecodeDateTime(Curtime,ye,mo,dd,hh,mm,ss,sm);
   dd:=Trunc(CurTime);
@@ -157,17 +160,18 @@ procedure TFormWebSocketTmr.ButtonSClick(Sender: TObject);
 begin
   if ButtonS.Tag=0 then begin
     stime:=Now;
+    ButtonS.Tag:=1;
     if DoReset then begin
       lastTick:=0;
       DoReset:=False;
     end;
-    Timer1.Enabled:=True;
-    ButtonS.Tag:=1;
+    //Timer1.Enabled:=True;
     ButtonS.Caption:=rsStop;
   end else begin
-    Timer1.Enabled:=False;
-    lastTick:=lastTick+curtick;
     ButtonS.Tag:=0;
+    //Timer1.Enabled:=False;
+    lastTick:=lastTick+curtick;
+    curtick:=0;
     ButtonS.Caption:=rsStart;
   end;
 end;
