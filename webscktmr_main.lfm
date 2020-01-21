@@ -12,6 +12,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
+  Position = poDefault
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
     Left = 0
