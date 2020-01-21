@@ -13,15 +13,20 @@ type
   { TFormWebSocketTmr }
 
   TFormWebSocketTmr = class(TForm)
+    ButtonFnt: TButton;
     ButtonS: TButton;
     ButtonR: TButton;
     CheckBoxMilli: TCheckBox;
+    ColorButtonB: TColorButton;
+    FontDialog1: TFontDialog;
     Panel1: TPanel;
     StaticTextTmr: TStaticText;
     Timer1: TTimer;
     UniqueInstance1: TUniqueInstance;
+    procedure ButtonFntClick(Sender: TObject);
     procedure ButtonSClick(Sender: TObject);
     procedure ButtonRClick(Sender: TObject);
+    procedure ColorButtonBColorChanged(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -115,6 +120,10 @@ begin
       lastTick:=inifile.ReadInt64('TIME','LASTTICK',0);
       WSPort:=inifile.ReadString('NET','PORT','57900');
       CheckBoxMilli.Checked:=inifile.ReadBool('TIME','SHOWMILLI',False);
+      StaticTextTmr.Font.Name:=inifile.ReadString('FONT','NAME','');
+      StaticTextTmr.Font.Size:=inifile.ReadInteger('FONT','SIZE',36);
+      StaticTextTmr.Font.Color:=inifile.ReadInteger('FONT','COLOR',clHighlight);
+      ColorButtonB.ButtonColor:=inifile.ReadInteger('FONT','BGCOLOR',clBlack);
     finally
       inifile.Free;
     end;
@@ -133,6 +142,10 @@ begin
       inifile.WriteInt64('TIME','LASTTICK',lastTick);
       inifile.WriteString('NET','PORT',WSPort);
       inifile.WriteBool('TIME','SHOWMILLI',CheckBoxMilli.Checked);
+      inifile.WriteString('FONT','NAME',StaticTextTmr.Font.Name);
+      inifile.WriteInteger('FONT','SIZE',StaticTextTmr.Font.Size);
+      inifile.WriteInteger('FONT','COLOR',StaticTextTmr.Font.Color);
+      inifile.WriteInteger('FONT','BGCOLOR',ColorButtonB.ButtonColor);
     finally
       inifile.Free;
     end;
@@ -159,6 +172,18 @@ begin
   end;
 end;
 
+procedure TFormWebSocketTmr.ButtonFntClick(Sender: TObject);
+begin
+  FontDialog1.Font.Name:=StaticTextTmr.Font.Name;
+  FontDialog1.Font.Size:=StaticTextTmr.Font.Size;
+  FontDialog1.Font.Color:=StaticTextTmr.Font.Color;
+  if FontDialog1.Execute then begin
+    StaticTextTmr.Font.Name:=FontDialog1.Font.Name;
+    StaticTextTmr.Font.Size:=FontDialog1.Font.Size;
+    StaticTextTmr.Font.Color:=FontDialog1.Font.Color;
+  end;
+end;
+
 procedure TFormWebSocketTmr.ButtonRClick(Sender: TObject);
 begin
   if QuestionDlg(Caption, rsResetTimer, mtConfirmation, [mrYes,rsYes, mrNo, rsNo,'IsDefault'], '')=mrYes
@@ -170,6 +195,12 @@ begin
     Timer1Timer(nil);
   end;
 end;
+
+procedure TFormWebSocketTmr.ColorButtonBColorChanged(Sender: TObject);
+begin
+  Color:=ColorButtonB.ButtonColor;
+end;
+
 
 procedure TFormWebSocketTmr.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);

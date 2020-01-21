@@ -1,6 +1,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
+#: tformwebsockettmr.buttonfnt.caption
+msgid "Font"
+msgstr ""
+
 #: tformwebsockettmr.buttonr.caption
 msgid "Reset"
 msgstr "초기화"

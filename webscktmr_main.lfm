@@ -8,6 +8,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
   Caption = 'WebSocket Timer'
   ClientHeight = 179
   ClientWidth = 348
+  Color = clBackground
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -20,9 +21,11 @@ object FormWebSocketTmr: TFormWebSocketTmr
     Align = alTop
     ClientHeight = 88
     ClientWidth = 348
+    ParentBackground = False
+    ParentColor = False
     TabOrder = 0
     object ButtonS: TButton
-      Left = 80
+      Left = 16
       Height = 25
       Top = 48
       Width = 75
@@ -32,11 +35,11 @@ object FormWebSocketTmr: TFormWebSocketTmr
       TabOrder = 0
     end
     object ButtonR: TButton
-      Left = 176
+      Left = 104
       Height = 25
       Top = 48
       Width = 75
-      Anchors = [akRight, akBottom]
+      Anchors = [akLeft, akBottom]
       Caption = 'Reset'
       OnClick = ButtonRClick
       TabOrder = 1
@@ -49,6 +52,27 @@ object FormWebSocketTmr: TFormWebSocketTmr
       Caption = 'MilliSecond'
       TabOrder = 2
     end
+    object ButtonFnt: TButton
+      Left = 224
+      Height = 25
+      Top = 8
+      Width = 75
+      Anchors = [akTop, akRight]
+      Caption = 'Font'
+      OnClick = ButtonFntClick
+      TabOrder = 3
+    end
+    object ColorButtonB: TColorButton
+      Left = 304
+      Height = 25
+      Top = 8
+      Width = 32
+      Anchors = [akTop, akRight]
+      BorderWidth = 2
+      ButtonColorSize = 16
+      ButtonColor = clBlack
+      OnColorChanged = ColorButtonBColorChanged
+    end
   end
   object StaticTextTmr: TStaticText
     Left = 0
@@ -58,7 +82,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
     Align = alClient
     Alignment = taCenter
     Caption = '00:00:00'
-    Color = clDefault
+    Color = clNone
     Font.CharSet = ANSI_CHARSET
     Font.Color = clHighlight
     Font.Height = -48
@@ -79,6 +103,14 @@ object FormWebSocketTmr: TFormWebSocketTmr
     Interval = 100
     OnTimer = Timer1Timer
     Left = 296
+    Top = 72
+  end
+  object FontDialog1: TFontDialog
+    MinFontSize = 0
+    MaxFontSize = 0
+    Options = [fdEffects, fdWysiwyg]
+    PreviewText = '1:23:45.678'
+    Left = 232
     Top = 72
   end
 end

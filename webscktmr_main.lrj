@@ -3,5 +3,6 @@
 {"hash":5941396,"name":"tformwebsockettmr.buttons.caption","sourcebytes":[83,116,97,114,116],"value":"Start"},
 {"hash":5818820,"name":"tformwebsockettmr.buttonr.caption","sourcebytes":[82,101,115,101,116],"value":"Reset"},
 {"hash":248489828,"name":"tformwebsockettmr.checkboxmilli.caption","sourcebytes":[77,105,108,108,105,83,101,99,111,110,100],"value":"MilliSecond"},
+{"hash":317012,"name":"tformwebsockettmr.buttonfnt.caption","sourcebytes":[70,111,110,116],"value":"Font"},
 {"hash":64175616,"name":"tformwebsockettmr.statictexttmr.caption","sourcebytes":[48,48,58,48,48,58,48,48],"value":"00:00:00"}
 ]}
