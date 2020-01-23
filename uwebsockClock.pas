@@ -30,7 +30,7 @@ type
       fProtocol:TWebSocketProtocolClock;
     protected
     public
-      constructor Create(const Port:string);
+      constructor Create(const Port, Name: string);
       destructor Destroy; override;
 
       procedure BroadcastMsg(const msg: RawByteString);
@@ -58,9 +58,9 @@ end;
 
 { TWebsocketClockServer }
 
-constructor TWebsocketClockServer.Create(const Port: string);
+constructor TWebsocketClockServer.Create(const Port,Name: string);
 begin
-  fServer:=TWebSocketServer.Create(Port,nil,nil,'webchatclock');
+  fServer:=TWebSocketServer.Create(Port,nil,nil,Name);
   fProtocol:=TWebSocketProtocolClock.Create('chatclock','');
   fProtocol.OnIncomingFrame:=@fProtocol.InComingMsg;
   fServer.WebSocketProtocols.Add(fProtocol);

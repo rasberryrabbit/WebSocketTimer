@@ -86,8 +86,8 @@ begin
   appconfig:=InitAppConfig;
   LoadAppConfig;
   try
-    clockwebsck:=TWebsocketClockServer.Create(WSPort);
-    clockreswebsck:=TWebsocketClockServer.Create(WSPortR);
+    clockwebsck:=TWebsocketClockServer.Create(WSPort,'WebSckClock');
+    clockreswebsck:=TWebsocketClockServer.Create(WSPortR,'WebSckClockRes');
     clockreswebsck.Protocol.Incoming:=@WebSckResIncoming;
   except
     on e:exception do
