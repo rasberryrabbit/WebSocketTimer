@@ -17,6 +17,14 @@
 <script type="text/javascript" src="reconnecting-websocket.min.js"></script>
 <script type="text/javascript">
 // width = 150, height = 70
+// timer
+var chatsock = new ReconnectingWebSocket("ws://localhost:57900","chatclock");
+chatsock.onmessage = function (event) {
+    var clockbox = document.getElementById("clockbox");
+    clocktext=event.data;
+    clockbox.innerText=clocktext;
+}
+// result
 var ressock = new ReconnectingWebSocket("ws://localhost:57901","chatclock");
 ressock.onmessage = function (event) {
     var node=document.createElement("LI");
