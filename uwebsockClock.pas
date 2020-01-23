@@ -9,11 +9,17 @@ uses
 
 type
 
+  TWebsocketClockincoming = procedure(const msg:RawByteString) of object;
+
   { TWebSocketProtocolClock }
 
   TWebSocketProtocolClock = class(TWebSocketProtocolChat)
+    private
+      fIncoming: TWebsocketClockincoming;
     public
       procedure InComingMsg(Sender: THttpServerResp; const Frame: TWebSocketFrame);
+
+      property Incoming:TWebsocketClockincoming read fIncoming write fIncoming;
   end;
 
   { TWebsocketClockServer }
@@ -21,18 +27,17 @@ type
   TWebsocketClockServer=class
     private
       fServer:TWebSocketServer;
+      fProtocol:TWebSocketProtocolClock;
     protected
     public
       constructor Create(const Port:string);
       destructor Destroy; override;
 
       procedure BroadcastMsg(const msg: RawByteString);
+
+      property Protocol:TWebSocketProtocolClock read fProtocol;
   end;
 
-  TWebsocketClockincoming = procedure(const msg:RawByteString);
-
-var
-  WebsocketClockincoming : TWebsocketClockincoming = nil;
 
 implementation
 
@@ -45,8 +50,8 @@ var
 begin
   case Frame.opcode of
   focText, focBinary :
-    if Assigned(WebsocketClockincoming) then begin
-      WebsocketClockincoming(Frame.payload);
+    if Assigned(fIncoming) then begin
+      fIncoming(Frame.payload);
     end;
   end;
 end;
@@ -54,13 +59,11 @@ end;
 { TWebsocketClockServer }
 
 constructor TWebsocketClockServer.Create(const Port: string);
-var
-  protocol:TWebSocketProtocolClock;
 begin
   fServer:=TWebSocketServer.Create(Port,nil,nil,'webchatclock');
-  protocol:=TWebSocketProtocolClock.Create('chatclock','');
-  protocol.OnIncomingFrame:=@protocol.InComingMsg;
-  fServer.WebSocketProtocols.Add(protocol);
+  fProtocol:=TWebSocketProtocolClock.Create('chatclock','');
+  fProtocol.OnIncomingFrame:=@fProtocol.InComingMsg;
+  fServer.WebSocketProtocols.Add(fProtocol);
 end;
 
 destructor TWebsocketClockServer.Destroy;

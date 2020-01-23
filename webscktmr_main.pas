@@ -31,6 +31,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure WebSckResIncoming(const msg:RawByteString);
   private
 
   public
@@ -62,9 +63,10 @@ var
   DoReset: Boolean = False;
   lastTick, curtick: Int64;
   ye, mo, dd, hh, mm, ss, sm: Word;
-  clockwebsck: TWebsocketClockServer;
+  clockwebsck, clockreswebsck: TWebsocketClockServer;
   appconfig: string;
   WSPort: string = '57900';
+  WSPortR: string = '57901';
 
 {$R *.lfm}
 
@@ -85,6 +87,8 @@ begin
   LoadAppConfig;
   try
     clockwebsck:=TWebsocketClockServer.Create(WSPort);
+    clockreswebsck:=TWebsocketClockServer.Create(WSPortR);
+    clockreswebsck.Protocol.Incoming:=@WebSckResIncoming;
   except
     on e:exception do
       ShowMessage(e.Message);
@@ -113,6 +117,27 @@ begin
   clockwebsck.BroadcastMsg(s);
 end;
 
+procedure TFormWebSocketTmr.WebSckResIncoming(const msg: RawByteString);
+var
+  ResTime: TDateTime;
+  s: string;
+  ResTick: Int64;
+  rye, rmo, rdd, rhh, rmm, rss, rsm: Word;
+begin
+  if ButtonS.Tag<>0 then begin
+    ResTick:=MilliSecondsBetween(Now,stime);
+    ResTime:=(lastTick+ResTick)/3600/24/1000;
+    DecodeDateTime(ResTime,rye,rmo,rdd,rhh,rmm,rss,rsm);
+    rdd:=Trunc(ResTime);
+    rhh:=rhh+rdd*24;
+    if CheckBoxMilli.Checked then
+      s:=Format('%d:%.2d:%.2d.%.3d',[rhh,rmm,rss,rsm])
+      else
+        s:=Format('%d:%.2d:%.2d',[rhh,rmm,rss]);
+    clockreswebsck.BroadcastMsg(msg+' '+s);
+  end;
+end;
+
 procedure TFormWebSocketTmr.LoadAppConfig;
 var
   inifile:TIniFile;
@@ -122,6 +147,7 @@ begin
     try
       lastTick:=inifile.ReadInt64('TIME','LASTTICK',0);
       WSPort:=inifile.ReadString('NET','PORT','57900');
+      WSPortR:=inifile.ReadString('NET','PORTR','57901');
       CheckBoxMilli.Checked:=inifile.ReadBool('TIME','SHOWMILLI',False);
       StaticTextTmr.Font.Name:=inifile.ReadString('FONT','NAME','');
       StaticTextTmr.Font.Size:=inifile.ReadInteger('FONT','SIZE',36);
@@ -144,6 +170,7 @@ begin
     try
       inifile.WriteInt64('TIME','LASTTICK',lastTick);
       inifile.WriteString('NET','PORT',WSPort);
+      inifile.WriteString('NET','PORTR',WSPortR);
       inifile.WriteBool('TIME','SHOWMILLI',CheckBoxMilli.Checked);
       inifile.WriteString('FONT','NAME',StaticTextTmr.Font.Name);
       inifile.WriteInteger('FONT','SIZE',StaticTextTmr.Font.Size);
@@ -217,6 +244,7 @@ end;
 procedure TFormWebSocketTmr.FormDestroy(Sender: TObject);
 begin
   clockwebsck.Free;
+  clockreswebsck.Free;
   SaveAppConfig;
 end;
 
