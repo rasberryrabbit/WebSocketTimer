@@ -1,8 +1,8 @@
 @font-face {
-font-family: 'Digital Numbers Regular';
+font-family: 'DigitalNumbers';
 font-style: normal;
 font-weight: normal;
-src: local('Digital Numbers Regular'), url('DigitalNumbers-Regular.woff') format('woff');
+src: local('DigitalNumbers'), url('DigitalNumbers-Regular.woff') format('woff');
 }
 
 #box {
@@ -20,5 +20,5 @@ src: local('Digital Numbers Regular'), url('DigitalNumbers-Regular.woff') format
   font-size: xx-large;
   color: white;
   text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
-  font-family:'Digital Numbers Regular';
+  font-family:'DigitalNumbers';
 }
