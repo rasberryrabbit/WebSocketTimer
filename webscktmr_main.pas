@@ -13,12 +13,16 @@ type
   { TFormWebSocketTmr }
 
   TFormWebSocketTmr = class(TForm)
+    ButtonTXT: TButton;
     ButtonFnt: TButton;
     ButtonS: TButton;
     ButtonR: TButton;
     CheckBoxMilli: TCheckBox;
     ColorButtonB: TColorButton;
+    EditTXT: TEdit;
     FontDialog1: TFontDialog;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
     Panel1: TPanel;
     StaticTextTmr: TStaticText;
     Timer1: TTimer;
@@ -26,12 +30,15 @@ type
     procedure ButtonFntClick(Sender: TObject);
     procedure ButtonSClick(Sender: TObject);
     procedure ButtonRClick(Sender: TObject);
+    procedure ButtonTXTClick(Sender: TObject);
     procedure ColorButtonBColorChanged(Sender: TObject);
+    procedure EditTXTKeyPress(Sender: TObject; var Key: char);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure WebSckResIncoming(const msg:RawByteString);
+    procedure WebSckTXTIncoming(const msg:RawByteString);
   private
 
   public
@@ -63,10 +70,11 @@ var
   DoReset: Boolean = False;
   lastTick, curtick: Int64;
   ye, mo, dd, hh, mm, ss, sm: Word;
-  clockwebsck, clockreswebsck: TWebsocketClockServer;
+  clockwebsck, clockreswebsck, webscktxt: TWebsocketClockServer;
   appconfig: string;
   WSPort: string = '57900';
   WSPortR: string = '57901';
+  WSPortT: string = '57902';
 
 {$R *.lfm}
 
@@ -89,6 +97,8 @@ begin
     clockwebsck:=TWebsocketClockServer.Create(WSPort,'WebSckClock');
     clockreswebsck:=TWebsocketClockServer.Create(WSPortR,'WebSckClockRes');
     clockreswebsck.Protocol.Incoming:=@WebSckResIncoming;
+    webscktxt:=TWebsocketClockServer.Create(WSPortT,'WebSckTXT');
+    webscktxt.Protocol.Incoming:=@WebSckTXTIncoming;
   except
     on e:exception do
       ShowMessage(e.Message);
@@ -138,6 +148,11 @@ begin
   end;
 end;
 
+procedure TFormWebSocketTmr.WebSckTXTIncoming(const msg: RawByteString);
+begin
+  webscktxt.BroadcastMsg(msg);
+end;
+
 procedure TFormWebSocketTmr.LoadAppConfig;
 var
   inifile:TIniFile;
@@ -148,6 +163,7 @@ begin
       lastTick:=inifile.ReadInt64('TIME','LASTTICK',0);
       WSPort:=inifile.ReadString('NET','PORT','57900');
       WSPortR:=inifile.ReadString('NET','PORTR','57901');
+      WSPortT:=inifile.ReadString('NET','PORTT','57902');
       CheckBoxMilli.Checked:=inifile.ReadBool('TIME','SHOWMILLI',False);
       StaticTextTmr.Font.Name:=inifile.ReadString('FONT','NAME','');
       StaticTextTmr.Font.Size:=inifile.ReadInteger('FONT','SIZE',36);
@@ -171,6 +187,7 @@ begin
       inifile.WriteInt64('TIME','LASTTICK',lastTick);
       inifile.WriteString('NET','PORT',WSPort);
       inifile.WriteString('NET','PORTR',WSPortR);
+      inifile.WriteString('NET','PORTT',WSPortT);
       inifile.WriteBool('TIME','SHOWMILLI',CheckBoxMilli.Checked);
       inifile.WriteString('FONT','NAME',StaticTextTmr.Font.Name);
       inifile.WriteInteger('FONT','SIZE',StaticTextTmr.Font.Size);
@@ -227,9 +244,22 @@ begin
   end;
 end;
 
+procedure TFormWebSocketTmr.ButtonTXTClick(Sender: TObject);
+begin
+  webscktxt.BroadcastMsg(EditTXT.Text);
+end;
+
 procedure TFormWebSocketTmr.ColorButtonBColorChanged(Sender: TObject);
 begin
   Color:=ColorButtonB.ButtonColor;
+end;
+
+procedure TFormWebSocketTmr.EditTXTKeyPress(Sender: TObject; var Key: char);
+begin
+  if Key=#13 then begin
+    ButtonTXT.Click;
+    Key:=#0;
+  end;
 end;
 
 
@@ -245,6 +275,7 @@ procedure TFormWebSocketTmr.FormDestroy(Sender: TObject);
 begin
   clockwebsck.Free;
   clockreswebsck.Free;
+  webscktxt.free;
   SaveAppConfig;
 end;
 

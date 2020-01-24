@@ -1,13 +1,13 @@
 object FormWebSocketTmr: TFormWebSocketTmr
-  Left = 274
-  Height = 194
-  Top = 147
-  Width = 372
+  Left = 384
+  Height = 273
+  Top = 218
+  Width = 377
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'WebSocket Timer'
-  ClientHeight = 194
-  ClientWidth = 372
+  ClientHeight = 273
+  ClientWidth = 377
   Color = clBackground
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
@@ -16,70 +16,109 @@ object FormWebSocketTmr: TFormWebSocketTmr
   LCLVersion = '2.1.0.0'
   object Panel1: TPanel
     Left = 0
-    Height = 88
+    Height = 168
     Top = 0
-    Width = 372
+    Width = 377
     Align = alTop
-    ClientHeight = 88
-    ClientWidth = 372
+    ClientHeight = 168
+    ClientWidth = 377
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    object ButtonS: TButton
-      Left = 16
-      Height = 25
-      Top = 48
-      Width = 75
-      Anchors = [akLeft, akBottom]
-      Caption = 'Start'
-      OnClick = ButtonSClick
+    object GroupBox1: TGroupBox
+      Left = 8
+      Height = 89
+      Top = 8
+      Width = 358
+      Anchors = [akTop, akLeft, akRight]
+      Caption = ' Timer '
+      ClientHeight = 72
+      ClientWidth = 354
       TabOrder = 0
+      object ButtonS: TButton
+        Left = 8
+        Height = 25
+        Top = 32
+        Width = 75
+        Caption = 'Start'
+        OnClick = ButtonSClick
+        TabOrder = 0
+      end
+      object ButtonR: TButton
+        Left = 104
+        Height = 25
+        Top = 32
+        Width = 75
+        Caption = 'Reset'
+        OnClick = ButtonRClick
+        TabOrder = 1
+      end
+      object CheckBoxMilli: TCheckBox
+        Left = 8
+        Height = 19
+        Top = 8
+        Width = 83
+        Caption = 'MilliSecond'
+        TabOrder = 2
+      end
+      object ButtonFnt: TButton
+        Left = 237
+        Height = 25
+        Top = 0
+        Width = 75
+        Anchors = [akTop, akRight]
+        Caption = 'Font'
+        OnClick = ButtonFntClick
+        TabOrder = 3
+      end
+      object ColorButtonB: TColorButton
+        Left = 317
+        Height = 25
+        Top = 0
+        Width = 32
+        Anchors = [akTop, akRight]
+        BorderWidth = 2
+        ButtonColorSize = 16
+        ButtonColor = clBlack
+        OnColorChanged = ColorButtonBColorChanged
+      end
     end
-    object ButtonR: TButton
-      Left = 104
-      Height = 25
-      Top = 48
-      Width = 75
-      Anchors = [akLeft, akBottom]
-      Caption = 'Reset'
-      OnClick = ButtonRClick
+    object GroupBox2: TGroupBox
+      Left = 7
+      Height = 64
+      Top = 96
+      Width = 359
+      Caption = ' Text '
+      ClientHeight = 47
+      ClientWidth = 355
       TabOrder = 1
-    end
-    object CheckBoxMilli: TCheckBox
-      Left = 16
-      Height = 19
-      Top = 24
-      Width = 83
-      Caption = 'MilliSecond'
-      TabOrder = 2
-    end
-    object ButtonFnt: TButton
-      Left = 248
-      Height = 25
-      Top = 8
-      Width = 75
-      Anchors = [akTop, akRight]
-      Caption = 'Font'
-      OnClick = ButtonFntClick
-      TabOrder = 3
-    end
-    object ColorButtonB: TColorButton
-      Left = 328
-      Height = 25
-      Top = 8
-      Width = 32
-      Anchors = [akTop, akRight]
-      BorderWidth = 2
-      ButtonColorSize = 16
-      ButtonColor = clBlack
-      OnColorChanged = ColorButtonBColorChanged
+      object EditTXT: TEdit
+        Left = 8
+        Height = 23
+        Top = 8
+        Width = 256
+        Anchors = [akTop, akLeft, akRight]
+        OnKeyPress = EditTXTKeyPress
+        TabOrder = 0
+        Text = 'Text'
+      end
+      object ButtonTXT: TButton
+        Left = 275
+        Height = 25
+        Top = 8
+        Width = 75
+        Anchors = [akTop, akRight]
+        Caption = 'Set'
+        OnClick = ButtonTXTClick
+        TabOrder = 1
+      end
     end
   end
   object StaticTextTmr: TStaticText
     Left = 0
     Height = 91
-    Top = 103
-    Width = 372
+    Top = 182
+    Width = 377
     Align = alBottom
     Alignment = taCenter
     Caption = '00:00:00'
@@ -96,14 +135,14 @@ object FormWebSocketTmr: TFormWebSocketTmr
   end
   object UniqueInstance1: TUniqueInstance
     Enabled = True
-    Left = 24
+    Left = 296
     Top = 72
   end
   object Timer1: TTimer
     Enabled = False
     Interval = 100
     OnTimer = Timer1Timer
-    Left = 296
+    Left = 336
     Top = 72
   end
   object FontDialog1: TFontDialog
@@ -111,7 +150,7 @@ object FormWebSocketTmr: TFormWebSocketTmr
     MaxFontSize = 0
     Options = [fdEffects, fdWysiwyg]
     PreviewText = '1:23:45.678'
-    Left = 232
+    Left = 256
     Top = 72
   end
 end

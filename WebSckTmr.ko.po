@@ -14,6 +14,10 @@ msgctxt "tformwebsockettmr.buttons.caption"
 msgid "Start"
 msgstr "스타트"
 
+#: tformwebsockettmr.buttontxt.caption
+msgid "Set"
+msgstr ""
+
 #: tformwebsockettmr.caption
 msgid "WebSocket Timer"
 msgstr ""
@@ -21,6 +25,18 @@ msgstr ""
 #: tformwebsockettmr.checkboxmilli.caption
 msgid "MilliSecond"
 msgstr "밀리초"
+
+#: tformwebsockettmr.edittxt.text
+msgid "Text"
+msgstr ""
+
+#: tformwebsockettmr.groupbox1.caption
+msgid " Timer "
+msgstr ""
+
+#: tformwebsockettmr.groupbox2.caption
+msgid " Text "
+msgstr ""
 
 #: tformwebsockettmr.statictexttmr.caption
 msgid "00:00:00"
