@@ -34,10 +34,12 @@ ressock.onmessage = function (event) {
     console.log(event.data);
 }
 function submittext() {
-  ressock.send("test");
+  ressock.send(document.getElementById("textareabox").value);
   console.log("submit")
 }
 </script>
-<button onclick=submittext()>Submit text</button>
+<div>
+<textarea id="textareabox" name="textarea1" placeholder="Start here..."></textarea>
+<button onclick=submittext()>Submit</button></div>
 </body>
 </html>

@@ -34,10 +34,12 @@ ressock.onmessage = function (event) {
     console.log(event.data);
 }
 function submitclock() {
-  ressock.send("test");
+  ressock.send(document.getElementById("textareabox").value);
   console.log("submit")
 }
 </script>
-<button onclick=submitclock()>Submit Time</button>
+<div>
+<textarea id="textareabox" name="textarea1" placeholder="Start here..."></textarea>
+<button onclick=submitclock()>Submit Time</button></div>
 </body>
 </html>
