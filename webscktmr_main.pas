@@ -247,6 +247,7 @@ end;
 procedure TFormWebSocketTmr.ButtonTXTClick(Sender: TObject);
 begin
   webscktxt.BroadcastMsg(EditTXT.Text);
+  EditTXT.SelectAll;
 end;
 
 procedure TFormWebSocketTmr.ColorButtonBColorChanged(Sender: TObject);
