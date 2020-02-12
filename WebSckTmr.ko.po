@@ -15,7 +15,7 @@ msgid "Start"
 msgstr "스타트"
 
 #: tformwebsockettmr.buttontxt.caption
-msgid "Set"
+msgid "Send"
 msgstr ""
 
 #: tformwebsockettmr.caption

@@ -7,6 +7,6 @@
 {"hash":317012,"name":"tformwebsockettmr.buttonfnt.caption","sourcebytes":[70,111,110,116],"value":"Font"},
 {"hash":39505760,"name":"tformwebsockettmr.groupbox2.caption","sourcebytes":[32,84,101,120,116,32],"value":" Text "},
 {"hash":371956,"name":"tformwebsockettmr.edittxt.text","sourcebytes":[84,101,120,116],"value":"Text"},
-{"hash":22980,"name":"tformwebsockettmr.buttontxt.caption","sourcebytes":[83,101,116],"value":"Set"},
+{"hash":367684,"name":"tformwebsockettmr.buttontxt.caption","sourcebytes":[83,101,110,100],"value":"Send"},
 {"hash":64175616,"name":"tformwebsockettmr.statictexttmr.caption","sourcebytes":[48,48,58,48,48,58,48,48],"value":"00:00:00"}
 ]}
