@@ -1,8 +1,8 @@
 @font-face {
-font-family: 'DigitalNumbers';
+font-family: 'Open24DisplaySt';
 font-style: normal;
 font-weight: normal;
-src: local('DigitalNumbers'), url('DigitalNumbers-Regular.woff') format('woff');
+src: local('Open24DisplaySt'), url('Open-24-Display-St.woff') format('woff');
 }
 
 #box {
@@ -20,5 +20,5 @@ src: local('DigitalNumbers'), url('DigitalNumbers-Regular.woff') format('woff');
   font-size: xx-large;
   color: white;
   text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
-  font-family:'DigitalNumbers';
+  font-family:'Open24DisplaySt';
 }
